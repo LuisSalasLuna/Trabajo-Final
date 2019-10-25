@@ -1,6 +1,9 @@
 #ifndef PACIENTE_H
 #define PACIENTE_H
 #include <iostream>
+#include <string.h>
+#include <stdlib.h>
+
 
 using namespace std;
 
@@ -19,8 +22,9 @@ class Paciente
         void AgregarPac();
         void ModificarPac();
         void EliminarPac();
-        void MostratInfoPac(string cod);
+        void MostrarInfoPac();
         void ListarPacs();
+        void MostrarRegs(string cod);
 };
 
 #endif // PACIENTE_H

@@ -3,8 +3,7 @@
 
 using namespace std;
 
-int main()
-{
+int main(){
     Paciente A;
     A.MenuPrincipal();
     return 0;
