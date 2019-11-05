@@ -1,18 +1,18 @@
-#include "Paciente.h"
+#include "Doctor.h"
 #include <iostream>
 #include <fstream>
 
 using namespace std;
 
-void Paciente::MenuPrincipal(){
+void Doctor::MenuPrincipal(){
     int opcion;
     do{
-        cout<<"\n\t\t\t Registro de pacientes del Hospital\n"<< endl;
-        cout<<" 1. Agregar paciente"<< endl;
-        cout<<" 2. Modificar datos de un paciente"<< endl;
-        cout<<" 3. Eliminar datos de un paciente"<< endl;
-        cout<<" 4. Mostrar informacion de paciente"<< endl;
-        cout<<" 5. Leer lista de pacientes"<< endl;
+        cout<<"\n\t\t\t Registro de doctores del Hospital\n"<< endl;
+        cout<<" 1. Agregar doctor"<< endl;
+        cout<<" 2. Modificar datos de un doctor"<< endl;
+        cout<<" 3. Eliminar datos de un doctor"<< endl;
+        cout<<" 4. Mostrar informacion de doctor"<< endl;
+        cout<<" 5. Leer lista de doctores"<< endl;
         cout<<" 6. Salir \n"<< endl;
         cout<<" Opci\242n: ";
         cin>>opcion;
@@ -23,19 +23,19 @@ void Paciente::MenuPrincipal(){
             break;
 
         case 1:
-            AgregarPac();
+            AgregarDoc();
             break;
         case 2:
-            ModificarPac();
+            ModificarDoc();
             break;
         case 3:
-            EliminarPac();
+            EliminarDoc();
             break;
         case 4:
-            MostrarInfoPac();
+            MostrarInfoDoc();
             break;
         case 5:
-            ListarPacs();
+            ListarDocs();
             break;
         case 6:
             break;
@@ -43,22 +43,22 @@ void Paciente::MenuPrincipal(){
     }
     while(opcion!=6);
 }
-void IntroAgregar();
-void error();
-void pausa();
-void Paciente::AgregarPac(){
+void IntroAgregarD();
+void errorD();
+void pausaD();
+void Doctor::AgregarDoc(){
     ofstream escritura;
     ifstream verificador;
     string auxCodigo;
     bool coincidencia=false;
-    verificador.open("pacientes.txt",ios::in);
-    escritura.open("pacientes.txt",ios::app);
+    verificador.open("doctores.txt",ios::in);
+    escritura.open("doctores.txt",ios::app);
     if(escritura.is_open()&&verificador.is_open())
     {
-        cout<<"\n\t\t\t Agregar un paciente\n\n";
+        cout<<"\n\t\t\t Agregar un doctor\n\n";
         fflush(stdin);
-        IntroAgregar();
-        cout<<" Ingrese el codigo del paciente: ";
+        IntroAgregarD();
+        cout<<" Ingrese el codigo del doctor: ";
         getline(cin,auxCodigo);
         if(auxCodigo=="")
             do
@@ -71,20 +71,17 @@ void Paciente::AgregarPac(){
         {
             verificador.seekg(0);
             getline(verificador,codigo);
-            while(!verificador.eof())
-            {
+            while(!verificador.eof()){
+                getline(verificador,especialidad);
                 getline(verificador,nombre);
                 getline(verificador,apellido);
                 getline(verificador,DNI);
-                getline(verificador,nacimiento);
                 getline(verificador,celular);
-                getline(verificador,direccion);
-
                 if(codigo==auxCodigo)
                 {
                     coincidencia=true;
-                    cout<<"\nYa existe un paciente con ese c\242digo!"<< endl;
-                    cout<<"El paciente con ese c\242digo es: "<<nombre<< "\n" << endl;
+                    cout<<"\nYa existe un doctor con ese c\242digo!"<< endl;
+                    cout<<"El doctor con ese c\242digo es: "<<nombre<< "\n" << endl;
                     cout<<"Ingresa un c\242digo v\240lido!: ";
                     getline(cin,auxCodigo);
                     if(auxCodigo=="")
@@ -109,64 +106,59 @@ void Paciente::AgregarPac(){
 
         system("CLS");
         codigo=auxCodigo;
-        cout<<"\n\t\t\t Agregar un paciente\n" << endl;;
-        IntroAgregar();
-        cout<<" Ingresa el c\242digo del paciente: "<< codigo <<endl;
+        cout<<"\n\t\t\t Agregar un doctor\n" << endl;;
+        IntroAgregarD();
+        cout<<" Ingresa el c\242digo del doctor: "<< codigo <<endl;
         fflush(stdin);
-        cout<<" Ingresa el nombre del paciente: ";
+        cout<<" Ingresa el especialidad del doctor: ";
+        getline(cin,especialidad);
+        fflush(stdin);
+        cout<<" Ingresa el nombre del doctor: ";
         getline(cin,nombre);
         fflush(stdin);
-        cout<<" Ingresa el apellido del paciente: ";
+        cout<<" Ingresa el apellido del doctor: ";
         getline(cin,apellido);
         fflush(stdin);
-        cout<<" Ingresa el DNI del paciente: ";
+        cout<<" Ingresa el DNI del doctor: ";
         getline(cin,DNI);
         fflush(stdin);
-        cout<<" Ingresa la fecha de nacimiento del paciente: ";
-        getline(cin,nacimiento);
-        fflush(stdin);
-        cout<<" Ingresa el n\243mero de telefono del paciente: ";
+        cout<<" Ingresa el n\243mero de telefono del doctor: ";
         getline(cin,celular);
-        fflush(stdin);
-        cout<<" Ingresa la direcci\242n del paciente: ";
-        getline(cin,direccion);
         cout<< endl;
-
-        escritura<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n"<<DNI<<"\n"<<nacimiento
-                 <<"\n"<<celular<<"\n"<<direccion<<"\n";
+        escritura<<codigo<<"\n"<<especialidad<<"\n"<<nombre<<"\n"<<apellido<<"\n"<<DNI
+                 <<"\n"<<celular<<"\n";
 
         cout<<" El registro se ha completado correctamente.\n\n";
     }
     else{
-        error();
+        errorD();
     }
     escritura.close();
     verificador.close();
-    pausa();
+    pausaD();
 }
-void Paciente::ModificarPac(){
+void Doctor::ModificarDoc(){
     ifstream lectura;
     ifstream verificador;
     ofstream auxiliar;
     string auxCodigo;
     string codigoModif;
+    string auxEspecialidad;
     string auxNombre;
     string auxApellido;
     string auxDNI;
-    string auxNacimiento;
     string auxCelular;
-    string auxDireccion;
     bool encontrado=false;
     bool coincidencia=false;
     bool mismoCodigo=false;
-    lectura.open("pacientes.txt",ios::in);
-    verificador.open("pacientes.txt",ios::in);
+    lectura.open("doctores.txt",ios::in);
+    verificador.open("doctores.txt",ios::in);
     auxiliar.open("auxiliar.txt",ios::out);
-    cout<<"\n\t\t\tModificar los datos de un paciente\n\n";
+    cout<<"\n\t\t\tModificar los datos de un doctor\n\n";
     if(lectura.is_open()&&verificador.is_open()&&auxiliar.is_open())
     {
         fflush(stdin);
-        cout<<" Ingresa el c\242digo del paciente a modificar: ";
+        cout<<" Ingresa el c\242digo del doctor a modificar: ";
         getline(cin,auxCodigo);
         if(auxCodigo==""){
             do{
@@ -179,20 +171,19 @@ void Paciente::ModificarPac(){
         getline(lectura,codigo);
         while(!lectura.eof())
         {
+            getline(lectura,especialidad);
             getline(lectura,nombre);
             getline(lectura,apellido);
             getline(lectura,DNI);
-            getline(lectura,nacimiento);
             getline(lectura,celular);
-            getline(lectura,direccion);
             if(auxCodigo==codigo){
                 encontrado=true;
                 MostrarRegs(codigoModif);
                 cout<<" **********************************************";
                 cout<<"\n\n";
-                cout<<" Ingresa la nueva informaci\242n para el paciente\n\n";
+                cout<<" Ingresa la nueva informaci\242n para el doctor\n\n";
                 fflush(stdin);
-                cout<<" Ingresa el c\242digo del paciente: ";
+                cout<<" Ingresa el c\242digo del doctor: ";
                 getline(cin,auxCodigo);
                 if(auxCodigo==codigoModif){
                     mismoCodigo=true;
@@ -206,16 +197,15 @@ void Paciente::ModificarPac(){
                         verificador.seekg(0);
                         getline(verificador,codigo);
                         while(!verificador.eof()){
+                            getline(verificador,especialidad);
                             getline(verificador,nombre);
                             getline(verificador,apellido);
                             getline(verificador,DNI);
-                            getline(verificador,nacimiento);
                             getline(verificador,celular);
-                            getline(verificador,direccion);
                             if(auxCodigo==codigo){
                                 coincidencia=true;
-                                cout<<"\n\n Ya existe un paciente con ese c\242digo!\n\n";
-                                cout<<" El paciente con ese c\242digo es: "<<nombre<<"\n\n";
+                                cout<<"\n\n Ya existe un doctor con ese c\242digo!\n\n";
+                                cout<<" El doctor con ese c\242digo es: "<<nombre<<"\n\n";
                                 cout<<" Ingresa un c\242digo v\240lido!: ";
                                 getline(cin,auxCodigo);
                                 if(auxCodigo==""){
@@ -236,46 +226,43 @@ void Paciente::ModificarPac(){
                     while(coincidencia==true);
                 }
                 system("CLS");
-                cout<<" Modificar los datos del paciente\n\n";
-                cout<<" Ingresa el c\242digo del paciente a modificar: ";
+                cout<<" Modificar los datos del doctor\n\n";
+                cout<<" Ingresa el c\242digo del doctor a modificar: ";
                 cout<<codigoModif;
                 MostrarRegs(codigoModif);
                 cout<<" **********************************************";
                 cout<<"\n\n";
-                cout<<" Ingresa la nueva informaci\242n para el paciente\n\n";
-                cout<<" Ingresa el c\242digo del paciente: "<<auxCodigo<<"\n\n";
+                cout<<" Ingresa la nueva informaci\242n para el doctor\n\n";
+                cout<<" Ingresa el c\242digo del doctor: "<<auxCodigo<<"\n\n";
                 fflush(stdin);
-                cout<<" Ingresa el nombre del paciente: ";
+                cout<<" Ingresa la especialidad del doctor: ";
+                getline(cin,auxEspecialidad);
+                fflush(stdin);
+                cout<<" Ingresa el nombre del doctor: ";
                 getline(cin,auxNombre);
                 fflush(stdin);
-                cout<<" Ingresa el apellido del paciente: ";
+                cout<<" Ingresa el apellido del doctor: ";
                 getline(cin,auxApellido);
                 fflush(stdin);
-                cout<<" Ingresa el DNI del paciente: ";
+                cout<<" Ingresa el DNI del doctor: ";
                 getline(cin,auxDNI);
                 fflush(stdin);
-                cout<<" Ingresa la fecha de nacimiento del paciente: ";
-                getline(cin,auxNacimiento);
-                fflush(stdin);
-                cout<<" Ingresa el n\243mero de telefono del paciente: ";
+                cout<<" Ingresa el n\243mero de telefono del doctor: ";
                 getline(cin,auxCelular);
-                fflush(stdin);
-                cout<<" Ingresa la direcci\242n del paciente: ";
-                getline(cin,auxDireccion);
                 cout<<"\n\n";
-                auxiliar<<auxCodigo<<"\n"<<auxNombre<<"\n"<<auxApellido<<"\n"<<auxDNI<<"\n"<<auxNacimiento
-                        <<"\n"<<auxCelular<<"\n"<<auxDireccion<<"\n";
+                auxiliar<<auxCodigo<<"\n"<<auxEspecialidad<<"\n"<<auxNombre<<"\n"<<auxApellido<<"\n"<<auxDNI
+                        <<"\n"<<auxCelular<<"\n";
                 cout<<"El Registro se ha modificado correctamente.\n\n";
             }
             else{
-                auxiliar<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n"<<DNI<<"\n"<<nacimiento
-                        <<"\n"<<celular<<"\n"<<direccion<<"\n";
+                auxiliar<<codigo<<"\n"<<especialidad<<"\n"<<nombre<<"\n"<<apellido<<"\n"<<DNI
+                        <<"\n"<<celular<<"\n";
             }
             getline(lectura,codigo);
         }
     }
     else{
-        error();
+        errorD();
     }
     if(encontrado==false){
         cout<<"\n\nNo se encontr\242 ning\243n registro con ese c\242digo!\n\n";
@@ -283,57 +270,55 @@ void Paciente::ModificarPac(){
     lectura.close();
     verificador.close();
     auxiliar.close();
-    remove("pacientes.txt");
-    rename("auxiliar.txt","pacientes.txt");
-    pausa();
+    remove("doctores.txt");
+    rename("auxiliar.txt","doctores.txt");
+    pausaD();
 }
-void Paciente::EliminarPac(){
+void Doctor::EliminarDoc(){
     ifstream lectura;
     ofstream auxiliar;
     bool encontrado=false;
     string auxCodigo;
     char respuesta[5];
-    lectura.open("pacientes.txt",ios::in);
+    lectura.open("doctores.txt",ios::in);
     auxiliar.open("auxiliar.txt",ios::out);
-    cout<<"\n\t\t\tEliminar un paciente\n\n";
+    cout<<"\n\t\t\tEliminar un doctor\n\n";
     if(lectura.is_open()&&auxiliar.is_open()){
         fflush(stdin);
-        cout<<" Ingresa el c\242digo del paciente que deseas eliminar: ";
+        cout<<" Ingresa el c\242digo del doctor que deseas eliminar: ";
         getline(cin,auxCodigo);
         getline(lectura,codigo);
         while(!lectura.eof()){
+            getline(lectura,especialidad);
             getline(lectura,nombre);
             getline(lectura,apellido);
             getline(lectura,DNI);
-            getline(lectura,nacimiento);
             getline(lectura,celular);
-            getline(lectura,direccion);
             if(auxCodigo==codigo){
                 encontrado=true;
                 cout<<"\n\nRegistro Encontrado\n\n";
                 cout<<" C\242digo: "<<codigo<<endl;
+                cout<<" Especialidad: "<<especialidad<<endl;
                 cout<<" Nombre: "<<nombre<<endl;
                 cout<<" Apellido: "<< apellido<<endl;
                 cout<<" DNI: "<<DNI<<endl;
-                cout<<" Fecha de nacimiento: "<<nacimiento<<endl;
                 cout<<" Celular: "<<celular <<endl;
-                cout<<" Direcci\242n: "<<direccion<<endl;
                 cout<<"\n\n";
                 cout<<" Realmente deseas eliminar a: "<<nombre<<" (s/n)?: ";
                 cin.getline(respuesta,5);
                 if(strcmp(respuesta,"s")==0||strcmp(respuesta,"S")==0||
                         strcmp(respuesta,"si")==0||strcmp(respuesta,"SI")==0||
                         strcmp(respuesta,"Si")==0||strcmp(respuesta,"sI")==0)
-                    {cout<<"\n\n El paciente fue eliminado correctamente\n\n";}
+                    {cout<<"\n\n El doctor fue eliminado correctamente\n\n";}
                 else{
-                    cout<<"\n\n Paciente conservado\n\n";
-                    auxiliar<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n"<<DNI<<"\n"<<nacimiento
-                            <<"\n"<<celular<<"\n"<<direccion<<"\n";
+                    cout<<"\n\n Doctor conservado\n\n";
+                    auxiliar<<codigo<<"\n"<<especialidad<<"\n"<<nombre<<"\n"<<apellido<<"\n"<<DNI
+                            <<"\n"<<celular<<"\n";
                 }
             }
             else{
-                auxiliar<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n"<<DNI<<"\n"<<nacimiento
-                        <<"\n"<<celular<<"\n"<<direccion<<"\n";
+                auxiliar<<codigo<<"\n"<<especialidad<<"\n"<<nombre<<"\n"<<apellido<<"\n"<<DNI
+                        <<"\n"<<celular<<"\n";
             }
             getline(lectura,codigo);
         }
@@ -342,43 +327,41 @@ void Paciente::EliminarPac(){
         }
     }
     else{
-        error();
+        errorD();
     }
     lectura.close();
     auxiliar.close();
-    remove("pacientes.txt");
-    rename("auxiliar.txt","pacientes.txt");
-    pausa();
+    remove("doctores.txt");
+    rename("auxiliar.txt","doctores.txt");
+    pausaD();
 }
-void Paciente::MostrarInfoPac(){
+void Doctor::MostrarInfoDoc(){
     string auxCodigo;
     ifstream mostrar;
     bool encontrado=false;
-    mostrar.open("pacientes.txt",ios::in);
+    mostrar.open("doctores.txt",ios::in);
     if(mostrar.is_open())
     {
         fflush(stdin);
-        cout<<"\n\t\t\tDetalles de un paciente\n\n";
-        cout<<" Ingresa el c\242digo del paciente a buscar: ";
+        cout<<"\n\t\t\tDetalles de un doctor\n\n";
+        cout<<" Ingresa el c\242digo del doctor a buscar: ";
         getline(cin,auxCodigo);
         getline(mostrar,codigo);
         while(!mostrar.eof()){
+            getline(mostrar,especialidad);
             getline(mostrar,nombre);
             getline(mostrar,apellido);
             getline(mostrar,DNI);
-            getline(mostrar,nacimiento);
             getline(mostrar,celular);
-            getline(mostrar,direccion);
             if(auxCodigo==codigo){
                 encontrado=true;
                 cout<<"\n\n Registro Encontrado\n\n";
                 cout<<" C\242digo: "<<codigo<<endl;
+                cout<<" Especialidad: "<<especialidad<<endl;
                 cout<<" Nombre: "<<nombre<<endl;
                 cout<<" Apellido: "<< apellido<<endl;
                 cout<<" DNI: "<<DNI<<endl;
-                cout<<" Fecha de nacimiento: "<<nacimiento<<endl;
                 cout<<" Celular: "<<celular <<endl;
-                cout<<" Direcci\242n: "<<direccion<<endl;
                 cout<<"\n\n";
             }
             getline(mostrar,codigo);
@@ -389,81 +372,77 @@ void Paciente::MostrarInfoPac(){
     }
 
     else{
-        error();
+        errorD();
     }
     mostrar.close();
-    pausa();
+    pausaD();
 }
-void Paciente::ListarPacs(){
+void Doctor::ListarDocs(){
     int i=0;
     ifstream lectura;
-    lectura.open("pacientes.txt",ios::in);
+    lectura.open("doctores.txt",ios::in);
     if(lectura.is_open())
     {
-        cout<<"\n\t\t\tListado de todos los pacientes\n\n";
+        cout<<"\n\t\t\tListado de todos los doctores\n\n";
         getline(lectura,codigo);
         while(!lectura.eof()){
             i++;
+            getline(lectura,especialidad);
             getline(lectura,nombre);
             getline(lectura,apellido);
             getline(lectura,DNI);
-            getline(lectura,nacimiento);
             getline(lectura,celular);
-            getline(lectura,direccion);
             cout<<" C\242digo: "<<codigo<<endl;
+            cout<<" Especialidad: "<<especialidad<<endl;
             cout<<" Nombre: "<<nombre<<endl;
             cout<<" Apellido: "<< apellido<<endl;
             cout<<" DNI: "<<DNI<<endl;
-            cout<<" Fecha de nacimiento: "<<nacimiento<<endl;
             cout<<" Celular: "<<celular <<endl;
-            cout<<" Direcci\242n: "<<direccion<<endl;
             cout<<"\n\n";
             getline(lectura,codigo);
         }
-        if(i==1){cout<<" Hay un solo paciente registrado en este hospital\n\n";}
-        else{cout<<"Hay un total de "<<i<<" pacientes registrados en este hospital\n\n";}
+        if(i==1){cout<<" Hay un solo doctor registrado en este hospital\n\n";}
+        else{cout<<"Hay un total de "<<i<<" doctores registrados en este hospital\n\n";}
     }
     else{
-        error();
+        errorD();
     }
     lectura.close();
-    pausa();
+    pausaD();
 }
-void Paciente::MostrarRegs(string cod){
+void Doctor::MostrarRegs(string cod){
     ifstream mostrar;
-    mostrar.open("pacientes.txt",ios::in);
+    mostrar.open("doctores.txt",ios::in);
     getline(mostrar,codigo);
     while(!mostrar.eof()){
+        getline(mostrar,especialidad);
         getline(mostrar,nombre);
         getline(mostrar,apellido);
         getline(mostrar,DNI);
-        getline(mostrar,nacimiento);
         getline(mostrar,celular);
-        getline(mostrar,direccion);
         if(cod==codigo){
             cout<<"\n\nRegistro Encontrado\n\n";
             cout<<" C\242digo: "<<codigo<<endl;
+            cout<<" Especialidad: "<<especialidad<<endl;
             cout<<" Nombre: "<<nombre<<endl;
             cout<<" Apellido: "<< apellido<<endl;
             cout<<" DNI: "<<DNI<<endl;
-            cout<<" Fecha de nacimiento: "<<nacimiento<<endl;
             cout<<" Celular: "<<celular <<endl;
-            cout<<" Direcci\242n: "<<direccion<<endl;
             cout<<"\n\n";
         }
         getline(mostrar,codigo);
     }
     mostrar.close();
 }
-void IntroAgregar(){
-    cout<<" Por favor ingrese los siguientes datos en orden: Codigo, nombre, apellido,"<<endl;
-    cout<<" DNI, fecha de nacimiento, celular y direcci\242n en ese \242rden. \n"<<endl;
+void IntroAgregarD(){
+    cout<<" Por favor ingrese los siguientes datos en orden: Codigo, especialidad, nombre,"<<endl;
+    cout<<" apellido, DNI y celular en ese \242rden. \n"<<endl;
 }
-void error(){
+void errorD(){
     cout<<" No se pudo abrir el archivo de registros, asegurese que el archivo se encuentre en"<< endl ;
-    cout<<" la misma ubicaci\242n que el programa o que reciba el nombre de: pacientes.txt.\n" << endl;
+    cout<<" la misma ubicaci\242n que el programa o que reciba el nombre de: doctores.txt.\n" << endl;
 }
-void pausa(){
+void pausaD(){
     system("pause");
     system("CLS");
 }

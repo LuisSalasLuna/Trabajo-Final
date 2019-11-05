@@ -34,8 +34,10 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/Doctor.h" />
 		<Unit filename="include/Paciente.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Doctor.cpp" />
 		<Unit filename="src/Paciente.cpp" />
 		<Extensions>
 			<code_completion />

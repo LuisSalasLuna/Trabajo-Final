@@ -1,29 +1,29 @@
-#ifndef PACIENTE_H
-#define PACIENTE_H
+#ifndef DOCTOR_H
+#define DOCTOR_H
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
 
 using namespace std;
 
-class Paciente
+class Doctor
 {
     private:
         string codigo;
+        string especialidad;
         string nombre;
         string apellido;
         string DNI;
-        string nacimiento;
         string celular;
-        string direccion;
     public:
         void MenuPrincipal();
-        void AgregarPac();
-        void ModificarPac();
-        void EliminarPac();
-        void MostrarInfoPac();
-        void ListarPacs();
+        void AgregarDoc();
+        void ModificarDoc();
+        void EliminarDoc();
+        void MostrarInfoDoc();
+        void ListarDocs();
         void MostrarRegs(string cod);
 };
 
-#endif // PACIENTE_H
+
+#endif // DOCTOR_H
