@@ -33,28 +33,13 @@ void ArrayPersonas::MenuPrincipal(){
             Agregar();
             break;
         case 2:
-            cout<<"\n\t\t\tModificar los datos de una persona\n\n";
-            MostrarPers2();
-            int opcionM;
-            cout<<"\n\n Opci\242n: ";
-            cin>>opcionM;
-            Modificar(opcionM);
+            Modificar();
             break;
         case 3:
-            cout<<"\n\t\t\tEliminar los datos de una persona\n\n";
-            MostrarPers2();
-            int opcionE;
-            cout<<"\n\n Opci\242n: ";
-            cin>>opcionE;
-            Eliminar(opcionE);
+            Eliminar();
             break;
         case 4:
-            cout<<"\n\t\t\tDetalles de una persona\n\n";
-            MostrarPers2();
-            int opcionI;
-            cout<<"\n\n Opci\242n: ";
-            cin>>opcionI;
-            MostrarInfoPersona(opcionI);
+            MostrarInfoPersona();
             break;
         case 5:
             MostrarPers();
@@ -71,6 +56,7 @@ void ArrayPersonas::MostrarPers(){
         cout<< "\n Persona " << i+1 << " :"<< endl;
         (ptr+i)->mostrar();
     }
+    pausa();
 }
 void ArrayPersonas::MostrarPers2(){
     cout<< " Elija la opci\242n de la persona a modificar: ";
@@ -91,9 +77,15 @@ void ArrayPersonas::Agregar(){
     Narr = ptr2;
     delete[] Narr;
     (*(ptr+tam-1)).SetDatos();
+    (*(ptr+tam-1)).SubirDatos();
     pausa();
 }
-void ArrayPersonas::Eliminar(int a){
+void ArrayPersonas::Eliminar(){
+    cout<<"\n\t\t\tEliminar los datos de una persona\n\n";
+    MostrarPers2();
+    int a;
+    cout<<"\n\n Opci\242n: ";
+    cin>>a;
     int c = 0;
     tam = tam-1;
     Persona *Narr= new Persona[tam];
@@ -112,8 +104,15 @@ void ArrayPersonas::Eliminar(int a){
     ptr = Narr;
     Narr = ptr2;
     delete[] Narr;
+    AlmacenarDatos();
+    pausa();
 }
-void ArrayPersonas::Modificar(int b){
+void ArrayPersonas::Modificar(){
+    cout<<"\n\t\t\tModificar los datos de una persona\n\n";
+    MostrarPers2();
+    int b;
+    cout<<"\n\n Opci\242n: ";
+    cin>>b;
     Persona *Narr= new Persona[tam];
     Persona *ptr2 = ptr;
     for(int i = 0;i < tam;i++){
@@ -125,12 +124,25 @@ void ArrayPersonas::Modificar(int b){
     ptr = Narr;
     Narr = ptr2;
     delete[] Narr;
+    AlmacenarDatos();
     pausa();
 }
-void ArrayPersonas::MostrarInfoPersona(int c){
-        (ptr+c-1)->mostrar();
+void ArrayPersonas::MostrarInfoPersona(){
+    cout<<"\n\t\t\tDetalles de una persona\n\n";
+    MostrarPers2();
+    int c;
+    cout<<"\n\n Opci\242n: ";
+    cin>>c;
+    (ptr+c-1)->mostrar();
+    pausa();
+}
+void ArrayPersonas::AlmacenarDatos(){
+    for(int i = 0;i < tam;i++){
+        (ptr+i)->ReescribirDatos();
+    }
 }
 void pausa(){
+    cout<<"\n";
     system("pause");
     system("CLS");
 }

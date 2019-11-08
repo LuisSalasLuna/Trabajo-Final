@@ -16,9 +16,10 @@ class ArrayPersonas{
         void MostrarPers();
         void MostrarPers2();
         void Agregar();
-        void Eliminar(int);
-        void Modificar(int);
-        void MostrarInfoPersona(int);
+        void Eliminar();
+        void Modificar();
+        void MostrarInfoPersona();
+        void AlmacenarDatos();
 };
 
 #endif // ARRAYPERSONAS_H

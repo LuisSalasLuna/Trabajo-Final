@@ -24,7 +24,7 @@ int main(){
             cout<<" Ha ingresado una opci\242n no valida!\n\n";
             break;
         case 1:
-            A.MenuPrincipal();  //error aqui
+            A.MenuPrincipal();
             break;
         /*case 2:
             B.MenuPrincipal();

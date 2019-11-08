@@ -18,6 +18,7 @@ public:
     virtual void mostrar();
     void mostrar2();
     void SubirDatos();
+    void ReescribirDatos();
 };
 
 #endif // PERSONA_H

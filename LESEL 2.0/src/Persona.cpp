@@ -1,4 +1,5 @@
 #include "Persona.h"
+#include <fstream>
 
 Persona::Persona(){
     codigo = "C\242digo";
@@ -40,6 +41,20 @@ void Persona::mostrar2(){
     cout<< codigo <<"\t"<< nombre << " " << apellido;
 }
 void Persona::SubirDatos(){
+    ofstream escritura;
+    escritura.open("pacientes.txt",ios::app);
 
+    escritura<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n";
 
+    cout<<"\n El registro se ha completado correctamente.\n\n";
+
+    escritura.close();
+}
+void Persona::ReescribirDatos(){
+    ofstream escritura;
+    escritura.open("pacientes.txt",ios::out);
+
+    escritura<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n";
+
+    escritura.close();
 }
