@@ -1,6 +1,9 @@
 #ifndef PACIENTE_H
 #define PACIENTE_H
 #include <iostream>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 using namespace std;
 #include <Persona.h>
 

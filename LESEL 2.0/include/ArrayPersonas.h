@@ -1,6 +1,8 @@
 #ifndef ARRAYPERSONAS_H
 #define ARRAYPERSONAS_H
 #include <iostream>
+#include <stdlib.h>
+
 using namespace std;
 #include <Persona.h>
 
@@ -11,7 +13,10 @@ class ArrayPersonas{
     public:
         ArrayPersonas();
         ArrayPersonas(int);
+        ArrayPersonas(string[], int);
+        ArrayPersonas(const ArrayPersonas&);
         ~ArrayPersonas();
+        int GetTam();
         void MenuPrincipal();
         void MostrarPers();
         void MostrarPers2();

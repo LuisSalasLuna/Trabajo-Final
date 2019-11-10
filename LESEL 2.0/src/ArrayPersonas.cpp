@@ -1,4 +1,5 @@
 #include "ArrayPersonas.h"
+
 void pausa();
 ArrayPersonas::ArrayPersonas(){
     tam = 0;
@@ -8,9 +9,24 @@ ArrayPersonas::ArrayPersonas(int tama ){  //mejorar
     tam = tama;
     ptr= new Persona[tama];
 }
+ArrayPersonas::ArrayPersonas(string arr[], int tama ){  //mejorar
+    tam = tama;
+    ptr= new Persona[tama];
+    int x = 0;
+    for(int a = 0; a < tam ; a++)
+        *(ptr+a) = Persona(arr[x++],arr[x++],arr[x++]);
+}
+ArrayPersonas::ArrayPersonas(const ArrayPersonas& A){
+   // for(int a = 0; a < A.tam ; a++){
+     //   ptr
+    //}
+}
 ArrayPersonas::~ArrayPersonas(){
     delete[] ptr;
     cout<< "Destructor invoked"<< endl;
+}
+int ArrayPersonas::GetTam(){
+    return tam;
 }
 void ArrayPersonas::MenuPrincipal(){
     int opcion;
@@ -141,6 +157,7 @@ void ArrayPersonas::AlmacenarDatos(){
         (ptr+i)->ReescribirDatos();
     }
 }
+
 void pausa(){
     cout<<"\n";
     system("pause");
