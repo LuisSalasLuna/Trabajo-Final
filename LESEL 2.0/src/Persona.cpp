@@ -6,10 +6,10 @@ Persona::Persona(){
     nombre = "Nombre";
     apellido = "Apellido";
 }
-Persona::Persona(string C, string N, string A){
-    codigo = C;
-    nombre = N;
-    apellido = A;
+Persona::Persona(string Cod, string Nom, string Ape){
+    codigo = Cod;
+    nombre = Nom;
+    apellido = Ape;
 }
 string Persona::GetCodigo(){
     return codigo;
@@ -20,10 +20,21 @@ string Persona::GetNombre(){
 string Persona::GetApellido(){
     return apellido;
 }
-void Persona::SetDatos(){
+void Persona::SetCodigo(string *ptr, int tam){
+    string *cod = ptr;
     fflush(stdin);
     cout<<"\n Ingresa el c\242digo de la persona: ";
     getline(cin,codigo);
+    for(int i = 0; i != tam ; i++){
+        while(codigo == cod[i] || codigo == ""|| codigo == " "){
+            i = 0;
+            fflush(stdin);
+            cout<<" Este c\242digo ya esta en uso o no es valido, ingresa un c\242digo valido: ";
+            getline(cin,codigo);
+        }
+    }
+}
+void Persona::SetDatos(){
     fflush(stdin);
     cout<<" Ingresa el nombre de la persona: ";
     getline(cin,nombre);
@@ -53,6 +64,14 @@ void Persona::SubirDatos(){
 void Persona::ReescribirDatos(){
     ofstream escritura;
     escritura.open("pacientes.txt",ios::out);
+
+    escritura<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n";
+
+    escritura.close();
+}
+void Persona::ReescribirDatos2(){
+    ofstream escritura;
+    escritura.open("auxiliar.txt",ios::app);
 
     escritura<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n";
 

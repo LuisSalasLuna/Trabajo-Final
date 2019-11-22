@@ -35,10 +35,12 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/ArrayPersonas.h" />
+		<Unit filename="include/Doctor.h" />
 		<Unit filename="include/Paciente.h" />
 		<Unit filename="include/Persona.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/ArrayPersonas.cpp" />
+		<Unit filename="src/Doctor.cpp" />
 		<Unit filename="src/Paciente.cpp" />
 		<Unit filename="src/Persona.cpp" />
 		<Extensions>

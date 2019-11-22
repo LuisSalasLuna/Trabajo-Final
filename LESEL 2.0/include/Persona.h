@@ -17,11 +17,14 @@ public:
     string GetCodigo();
     string GetNombre();
     string GetApellido();
+    //virtual int NroVariables();
+    void SetCodigo(string*, int);
     virtual void SetDatos();
     virtual void mostrar();
-    void mostrar2();
-    void SubirDatos();
-    void ReescribirDatos();
+    virtual void mostrar2();
+    virtual void SubirDatos();
+    virtual void ReescribirDatos();
+    virtual void ReescribirDatos2();
 };
 
 #endif // PERSONA_H

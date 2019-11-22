@@ -1,5 +1,5 @@
-#ifndef PACIENTE_H
-#define PACIENTE_H
+#ifndef DOCTOR_H
+#define DOCTOR_H
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
@@ -7,16 +7,17 @@
 using namespace std;
 #include <Persona.h>
 
-class Paciente : public Persona{
+class Doctor:public Persona
+{
     private:
-        string nacimiento;
-        string direccion;
+        string especialidad;
     public:
-        Paciente();
-        Paciente(string, string, string, string, string);
+        Doctor();
+        Doctor(string, string, string, string);
         void mostrar();
         void SetDatos();
         void SubirDatos();
         void ReescribirDatos();
 };
-#endif // PACIENTE_H
+
+#endif // DOCTOR_H

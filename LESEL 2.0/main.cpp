@@ -1,69 +1,89 @@
 #include <iostream>
 #include <string.h>
 #include <stdlib.h>
+#include <vector>
 #include <Persona.h>
 #include <ArrayPersonas.h>
 #include <Paciente.h>
+#include <Doctor.h>
 
 using namespace std;
 #include <fstream>
 
-int ObtenerTam(){
+
+int ObtenerTam(string arch){        //modificar las funciones para aplicar herencia
+    ofstream creacion;
     string contador;
     ifstream extraccion;//
     int i=0;
-    extraccion.open("pacientes.txt",ios::in);
+    creacion.open(arch.c_str(),ios::app);
+    creacion.close();
+    extraccion.open(arch.c_str(),ios::in);
     while(!extraccion.eof()){
         getline(extraccion,contador);
         if(contador != ""){++i;}
     }
-    //cout<< i;
     extraccion.close();
-    return i;    //dejarlo por defecto?
+    return i;
 }
-
-string* ObtenerPuntero(){
-    string codigo;
-    string nombre;
-    string apellido;
-    string liberador;
+string* ObtenerStrings(string arch){
+    string texto;
     ifstream extraccion;
-    int i = ObtenerTam();
-    //string arr[i];
+    int i = ObtenerTam(arch);
     string *arr= new string[i];
     int c = 0;
-    string elem[] ={codigo,nombre,apellido};
-    extraccion.open("pacientes.txt",ios::in);
-    while(!extraccion.eof()){
-        for(int a = 0; a < i; a++){
-            if(c == 3){c = 0;}
-            getline(extraccion,elem[c]);
-            arr[a] = elem[c];
-            //cout << c <<"   "<< arr[a]<<endl;
+    extraccion.open(arch.c_str(),ios::in);
+    while(c != i){
+            getline(extraccion,texto);
+            //cout<<c <<  texto;
+            arr[c] =texto;
             c++;
-
-        }
-        getline(extraccion,liberador);
     }
     extraccion.close();
     return arr;
 }
-/*ArrayPersonas Eleccion(){
-    string *arr = ObtenerRegistro();
-    if(*(arr) == ""){
-        return ArrayPersonas(0);
+Persona *GetPerson1(int tam, string *cad){
+    //int tam =ObtenerTam(file);
+    string *sol = cad;
+    int x = 0;
+    Persona *Per = new Persona[tam/3];
+    for(int i=0; i<tam/3;i++){
+        *(Per+i)=Persona(sol[x],sol[x+1],sol[x+2]);
+        x += 3;
     }
-    else{
-        return ArrayPersonas(9);
+    return Per;
+}
+Paciente *GetPac(int tam, string *cad){
+    //int tam =ObtenerTam(file);
+    string *sol = cad;
+    int x = 0;
+    Paciente *Per = new Paciente[tam/5];
+    for(int i=0; i<tam/5;i++){
+        *(Per+i)=Paciente(sol[x],sol[x+1],sol[x+2],sol[x+3],sol[x+4]);
+        x += 5;
     }
-}*/
+    return Per;
+}
+Doctor *GetDoc(int tam, string *cad){
+    //int tam =ObtenerTam(file);
+    string *sol = cad;
+    int x = 0;
+    Doctor *Per = new Doctor[tam/4];
+    for(int i=0; i<tam/4;i++){
+        *(Per+i)=Doctor(sol[x],sol[x+1],sol[x+2],sol[x+3]);
+        x += 4;
+    }
+    return Per;
+}
 int main(){
-    //Paciente A;
-    //A.SetDatos();
-    int a = ObtenerTam()/3;
-    string *p = ObtenerPuntero();
-    ArrayPersonas A(p,a);
-    //A = Eleccion();
+    int a = ObtenerTam("pacientes.txt");
+    int b = ObtenerTam("doctores.txt");
+    string *p = ObtenerStrings("pacientes.txt");
+    Doctor *Doc =GetDoc(ObtenerTam("doctores.txt"),p);
+    Paciente *Per1 =GetPac(ObtenerTam("pacientes.txt"),p);
+    //--ArrayPersonas <Persona> A(p,a);
+    ArrayPersonas <Paciente> A(Per1,a,5);
+    ArrayPersonas <Doctor> B(Doc,b,4);
     int opcion;
     do{
         cout<<"\n\t\t\t LESEL-Database\n"<< endl;
@@ -83,10 +103,10 @@ int main(){
         case 1:
             A.MenuPrincipal();
             break;
-        /*case 2:
+        case 2:
             B.MenuPrincipal();
             break;
-        case 3:
+        /*case 3:
             Cita();
             break;
         case 4:
