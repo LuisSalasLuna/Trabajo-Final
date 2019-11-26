@@ -17,7 +17,6 @@ class Doctor:public Persona
         void mostrar();
         void SetDatos();
         void SubirDatos();
-        void ReescribirDatos();
 };
 
 #endif // DOCTOR_H

@@ -10,8 +10,7 @@
 using namespace std;
 #include <fstream>
 
-
-int ObtenerTam(string arch){        //modificar las funciones para aplicar herencia
+int ObtenerTam(string arch){
     ofstream creacion;
     string contador;
     ifstream extraccion;//
@@ -35,7 +34,6 @@ string* ObtenerStrings(string arch){
     extraccion.open(arch.c_str(),ios::in);
     while(c != i){
             getline(extraccion,texto);
-            //cout<<c <<  texto;
             arr[c] =texto;
             c++;
     }
@@ -81,18 +79,15 @@ int main(){
     string *p = ObtenerStrings("pacientes.txt");
     Doctor *Doc =GetDoc(ObtenerTam("doctores.txt"),p);
     Paciente *Per1 =GetPac(ObtenerTam("pacientes.txt"),p);
-    //--ArrayPersonas <Persona> A(p,a);
-    ArrayPersonas <Paciente> A(Per1,a,5);
-    ArrayPersonas <Doctor> B(Doc,b,4);
+    ArrayPersonas <Paciente> A(Per1,a,5,"pacientes.txt");
+    ArrayPersonas <Doctor> B(Doc,b,4,"doctores.txt");
     int opcion;
     do{
         cout<<"\n\t\t\t LESEL-Database\n"<< endl;
         cout<<" 1. Pacientes"<< endl;
         cout<<" 2. Doctores"<< endl;
         cout<<" 3. Organizar cita"<< endl;
-        cout<<" 4. ++++++++++"<< endl;
-        cout<<" 5. ++++++++++"<< endl;
-        cout<<" 6. Salir \n"<< endl;
+        cout<<" 4. Salir \n"<< endl;
         cout<<" Opci\242n: ";
         cin>>opcion;
         system("CLS");
@@ -108,18 +103,12 @@ int main(){
             break;
         /*case 3:
             Cita();
-            break;
-        case 4:
-            --------();
-            break;
-        case 5:
-            //-------();
             break;*/
-        case 6:
+        case 4:
             break;
         }
     }
-    while(opcion!=6);
+    while(opcion!=4);
 
     return 0;
 }

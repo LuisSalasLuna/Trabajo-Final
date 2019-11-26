@@ -24,26 +24,11 @@ void Paciente::mostrar(){
     cout<< " Direcci\242n: "<< direccion<< endl;
 }
 void Paciente::SubirDatos(){
-    Persona::SubirDatos();
+    Persona::SubirDatos(archivo);
     ofstream escritura;
     escritura.open("pacientes.txt",ios::app);
 
     escritura<<nacimiento<<"\n"<<direccion<<"\n";
 
-    //cout<<"\n El registro se ha completado correctamente.\n\n";
-
     escritura.close();
 }
-void Paciente::ReescribirDatos(){
-    Persona::ReescribirDatos();
-    ofstream escritura;
-    escritura.open("pacientes.txt",ios::out);
-
-    escritura<<nacimiento<<"\n"<<direccion<<"\n";
-
-    escritura.close();
-}
-/*void Paciente::mostrar2(){
-    Persona::mostrar2();
-    cout<< nacimiento <<"\t"<< nombre << " " << apellido;
-}*/

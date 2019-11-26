@@ -10,21 +10,20 @@ protected:
     string codigo;
     string nombre;
     string apellido;
+    string archivo;
 public:
     Persona();
     Persona(string, string, string);
-    //Persona(const Persona&);
     string GetCodigo();
     string GetNombre();
     string GetApellido();
-    //virtual int NroVariables();
     void SetCodigo(string*, int);
     virtual void SetDatos();
     virtual void mostrar();
     virtual void mostrar2();
-    virtual void SubirDatos();
-    virtual void ReescribirDatos();
-    virtual void ReescribirDatos2();
+    virtual void SubirDatos(string);
+    void Limpiar();
+    virtual void ReescribirDatos2(string);
 };
 
 #endif // PERSONA_H

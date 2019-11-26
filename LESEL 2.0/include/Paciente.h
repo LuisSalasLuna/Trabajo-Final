@@ -17,6 +17,5 @@ class Paciente : public Persona{
         void mostrar();
         void SetDatos();
         void SubirDatos();
-        void ReescribirDatos();
 };
 #endif // PACIENTE_H

@@ -51,25 +51,23 @@ void Persona::mostrar(){
 void Persona::mostrar2(){
     cout<< codigo <<"\t"<< nombre << " " << apellido;
 }
-void Persona::SubirDatos(){
+void Persona::SubirDatos(string F){
     ofstream escritura;
+    archivo = F;
     escritura.open("pacientes.txt",ios::app);
 
     escritura<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n";
 
-    cout<<"\n El registro se ha completado correctamente.\n\n";
-
     escritura.close();
 }
-void Persona::ReescribirDatos(){
+void Persona::Limpiar(){
     ofstream escritura;
     escritura.open("pacientes.txt",ios::out);
 
-    escritura<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n";
-
     escritura.close();
 }
-void Persona::ReescribirDatos2(){
+
+void Persona::ReescribirDatos2(string F){
     ofstream escritura;
     escritura.open("auxiliar.txt",ios::app);
 

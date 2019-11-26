@@ -14,17 +14,19 @@ class ArrayPersonas{
         void pausa();
     protected:
         T *ptr;
+        T *ptr2;
         int tam;
         int NroVariables;
-        string archiv;
     public:
         ArrayPersonas();
-        ArrayPersonas(string[], int, int);//
-        ArrayPersonas(T[], int, int, string);
+        ArrayPersonas(string[], int,int);//
+        ArrayPersonas(T[], int,int);
         ~ArrayPersonas();
+        int GetTam();
         string* GetCodigos();
         string* GetNombres();
         string* GetApellidos();
+        virtual void ModificarSalida();
         void MenuPrincipal();
         void MenuEnlistar();
         void MostrarPers();
@@ -37,6 +39,7 @@ class ArrayPersonas{
         void OrdenarApellido();
         void OrdenarApellido2();
         void Busqueda();
+        void Busqueda2();
         void AlmacenarDatos();
         void AlmacenarDatos2();
 };
@@ -50,6 +53,7 @@ template <typename T>
 ArrayPersonas<T>::ArrayPersonas(){
     tam = 0;
     ptr= new T[tam];
+    ptr2= new T[tam];
     NroVariables = 3;
 }
 template <typename T>
@@ -57,6 +61,7 @@ ArrayPersonas<T>::ArrayPersonas(string arr[], int tama, int Var){  //caso prueba
     NroVariables=Var;
     tam = tama/NroVariables;
     ptr= new T[tam];
+    ptr2= new T[tam];
     int x = 0;
     for(int a = 0; a < tam ; a++){
         *(ptr+a) = Persona(arr[x],arr[x+1],arr[x+2]);
@@ -64,11 +69,11 @@ ArrayPersonas<T>::ArrayPersonas(string arr[], int tama, int Var){  //caso prueba
     }
 }
 template <typename T>
-ArrayPersonas<T>::ArrayPersonas(T arr[], int tama, int Var, string F ){
+ArrayPersonas<T>::ArrayPersonas(T arr[], int tama, int Var ){
     NroVariables=Var;
     tam = tama/NroVariables;
-    archiv = F;
     ptr= new T[tam];
+    ptr2= new T[tam];
     int x = 0;
     for(int a = 0; a < tam ; a++){
         this ->ptr[a]=arr[a];
@@ -77,12 +82,24 @@ ArrayPersonas<T>::ArrayPersonas(T arr[], int tama, int Var, string F ){
 template <typename T>
 ArrayPersonas<T>::~ArrayPersonas(){
     delete[] ptr;
+    delete[] ptr2;
     cout<< "Destructor invoked"<< endl;
+}
+template <typename T>
+int ArrayPersonas<T>::GetTam(){
+    return tam;
+}
+template <typename T>
+void ArrayPersonas<T>::ModificarSalida(){
+    T *Narr= new T[tam];
+    T *ptrAux = ptr2;
+    ptr2 = Narr;
+    Narr = ptrAux;
+    delete[] Narr;
 }
 template <typename T>
 string* ArrayPersonas<T>::GetCodigos(){
     string *cod = new string[tam];
-    //string cod[tam];
     for(int i = 0; i <tam;i++){
         *(cod+i) = (ptr+i)->GetCodigo();
     }
@@ -108,12 +125,12 @@ template <typename T>
 void ArrayPersonas<T>::MenuPrincipal(){
     int opcion;
     do{
-        cout<<"\n\t\t\t Registro"<< endl;
-        cout<<" 1. Agregar registro"<< endl;
-        cout<<" 2. Modificar registro"<< endl;
-        cout<<" 3. Eliminar registro"<< endl;
-        cout<<" 4. Mostrar detalles de registro "<< endl;
-        cout<<" 5. Leer listado "<< endl;
+        cout<<"\n\t\t\t Registro de personas"<< endl;
+        cout<<" 1. Agregar persona"<< endl;
+        cout<<" 2. Modificar datos de una persona"<< endl;
+        cout<<" 3. Eliminar datos de una persona"<< endl;
+        cout<<" 4. Mostrar informacion de persona"<< endl;
+        cout<<" 5. Leer listado de personas"<< endl;
         cout<<" 6. Busqueda "<< endl;
         cout<<" 7. Salir \n"<< endl;
         cout<<" Opci\242n: ";
@@ -139,7 +156,7 @@ void ArrayPersonas<T>::MenuPrincipal(){
             MenuEnlistar();
             break;
         case 6:
-            Busqueda();
+            Busqueda2();
             break;
         case 7:
             break;
@@ -167,7 +184,7 @@ int opcion;
             OrdenarNombre();
             break;
         case 2:
-            //OrdenarApellido2();
+            OrdenarApellido2();
             break;
         /*case 3:
             //Eliminar();
@@ -180,7 +197,7 @@ int opcion;
 }
 template <typename T>
 void ArrayPersonas<T>::MostrarPers(){
-    cout<<"\n\t\t\tEnlistado de registros"<<endl;
+    cout<<"\n\t\t\tListado de todas las personas"<<endl;
     for(int i = 0;i < tam;i++){
         cout<< "\n Persona " << i+1 << " :"<< endl;
         (ptr+i)->mostrar();
@@ -189,7 +206,7 @@ void ArrayPersonas<T>::MostrarPers(){
 }
 template <typename T>
 void ArrayPersonas<T>::MostrarPers2(){
-    cout<< " Elija el registro a modificar: ";
+    cout<< " Elija la opci\242n de la persona a modificar: ";
     for(int i = 0;i < tam;i++){
         cout<< "\n  " << i+1 << " : " ;
         (ptr+i)->mostrar2();
@@ -197,31 +214,34 @@ void ArrayPersonas<T>::MostrarPers2(){
 }
 template <typename T>
 void ArrayPersonas<T>::Agregar(){
-    cout<<"\n\t\t\t Agregar registro"<<endl;
+    cout<<"\n\t\t\t Agregar una persona"<<endl;
     tam = tam+1;
-    T *ptr2 = new T[tam];
+    ModificarSalida();
     T *ptrAux = ptr;
     for(int i = 0;i < tam-1;i++){
-        ptr2[i] = *(ptr+i);
+        ptr2[i]=*(ptr+i);
     }
     ptr = ptr2;
     ptr2 = ptrAux;
+    cout<<1;
     (*(ptr+tam-1)).SetCodigo(GetCodigos(),tam);
+    cout<<1;
     (*(ptr+tam-1)).SetDatos();
+    cout<<1;
     (*(ptr+tam-1)).SubirDatos();
-        cout<<"\n El registro se ha completado correctamente.\n\n";
+    cout<<1;
     pausa();
 }
 template <typename T>
 void ArrayPersonas<T>::Eliminar(){
-    cout<<"\n\t\t\t Eliminar registro\n\n";
+    cout<<"\n\t\t\tEliminar los datos de una persona\n\n";
     MostrarPers2();
     int a;
     cout<<"\n\n Opci\242n: ";
     cin>>a;
     int c = 0;
     tam = tam-1;
-    T *ptr2 = new T[tam];
+    ModificarSalida();
     T *ptrAux = ptr;
     T x = *(ptr+a-1);
     for(int i = 0;i < tam;i++){
@@ -241,7 +261,7 @@ void ArrayPersonas<T>::Eliminar(){
 }
 template <typename T>
 void ArrayPersonas<T>::Modificar(){  //Buscar obtimizacion de funcion
-    cout<<"\n\t\t\tModificar registro\n\n";
+    cout<<"\n\t\t\tModificar los datos de una persona\n\n";
     MostrarPers2();
     int b;
     cout<<"\n\n Opci\242n: ";
@@ -262,7 +282,7 @@ void ArrayPersonas<T>::Modificar(){  //Buscar obtimizacion de funcion
 }
 template <typename T>
 void ArrayPersonas<T>::MostrarInfoPersona(){
-    cout<<"\n\t\t\tDetalles de registro\n\n";
+    cout<<"\n\t\t\tDetalles de una persona\n\n";
     MostrarPers2();
     int c;
     cout<<"\n\n Opci\242n: ";
@@ -282,6 +302,7 @@ void ArrayPersonas<T>::OrdenarNombre(){
             T aux = ptr[m];
             ptr[m]= ptr[i];
             ptr[i] = aux;
+        //ptr[i].mostrar();
             }
         }
     }
@@ -307,19 +328,53 @@ void ArrayPersonas<T>::OrdenarApellido(){
     MostrarPers();
     AlmacenarDatos2();//
 }
-/*template <typename T>
+template <typename T>
 void ArrayPersonas<T>::OrdenarApellido2(){
+
     string *ape = GetApellidos();
-    int z = sizeof(ape)/sizeof(ape[0]);
-    sort(ape,ape+tam); //Use the start and end like this
+    int z = sizeof(ape)/sizeof(ape[0]); //Get the array size
+
+    sort(ape,ape+z); //Use the start and end like this
   for(int y = 0; y < z; y++)
   {
-    cout << ape[y] << endl;
+    cout << ape[z] << endl;
   }
-  pausa();
-}*/
+}
+
+
 template <typename T>
 void ArrayPersonas<T>::Busqueda(){
+    cout<<"\n\t\t\t Busqueda "<< endl;
+    cout<<" Introduzca dato a buscar: ";
+    string *ape = GetApellidos();
+    vector <int> aux;
+    string elemento;
+    bool coincidencia = false;
+    int n = 0;
+    cin>>elemento;
+    for(int i = 0; i < tam ; i++){
+        for(int j = 0 ; elemento[j] != '\0' ; j++){
+            if(elemento[j] == ape[i][j]){coincidencia=true;}
+            else{coincidencia=false;}
+        }
+        if (coincidencia == true){
+            ++n;
+            aux.push_back(i);
+            cout<< "\n  " << n << " : " ;
+            (ptr+i)->mostrar2();}
+    }
+    if (aux.size()==0){cout<< " No se han encontrado resultados ";}
+    else{
+        int c;
+        cout<<"\n Opci\242n: ";
+        cin>>c;
+        int h =aux[c-1];
+        cout<<"\n";
+        (ptr+h)->mostrar();}
+    pausa();
+}
+template <typename T>
+void ArrayPersonas<T>::Busqueda2(){
     cout<<"\n\t\t\t Busqueda "<< endl;
     cout<<" Introduzca dato a buscar: ";
     vector <int> aux;
@@ -329,6 +384,9 @@ void ArrayPersonas<T>::Busqueda(){
     for(int b = 0;b <tam;b++){
        arr[b][0] = putchar(tolower(arr[b][0]));  //arreglar impresion de conversiones
     }
+
+
+    //cin.ignore();
     ele[0]=putchar(tolower(ele[0]));
     int n;
     for(int i = 0;i<tam;i++){
@@ -351,17 +409,18 @@ void ArrayPersonas<T>::Busqueda(){
 }
 template <typename T>
 void ArrayPersonas<T>::AlmacenarDatos(){
-    (ptr)->Limpiar();
     for(int i = 0;i < tam;i++){
-        (ptr+i)->SubirDatos();
+        (ptr+i)->ReescribirDatos();
     }
 }
 template <typename T>
 void ArrayPersonas<T>::AlmacenarDatos2(){
     for(int i = 0;i < tam;i++){
-        (ptr+i)->ReescribirDatos2(archiv);
+        (ptr+i)->ReescribirDatos2();
     }
     remove("pacientes.txt");
     rename("auxiliar.txt","pacientes.txt");
 }
+
+
 #endif // ARRAYPERSONAS_H

@@ -18,20 +18,9 @@ void Doctor::mostrar(){
     cout<< " Especialidad: "<< especialidad<< endl;
 }
 void Doctor::SubirDatos(){
-    Persona::SubirDatos();
+    Persona::SubirDatos(archivo);
     ofstream escritura;
-    escritura.open("pacientes.txt",ios::app);
-
-    escritura<<especialidad<<"\n";
-
-    //cout<<"\n El registro se ha completado correctamente.\n\n";
-
-    escritura.close();
-}
-void Doctor::ReescribirDatos(){
-    Persona::ReescribirDatos();
-    ofstream escritura;
-    escritura.open("pacientes.txt",ios::out);
+    escritura.open("doctores.txt",ios::app);
 
     escritura<<especialidad<<"\n";
 
