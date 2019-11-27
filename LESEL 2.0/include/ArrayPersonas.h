@@ -21,7 +21,9 @@ class ArrayPersonas{
         ArrayPersonas();
         ArrayPersonas(string[], int, int);//
         ArrayPersonas(T[], int, int, string);
+        ArrayPersonas(const ArrayPersonas &);
         ~ArrayPersonas();
+        T *GetPtr();
         string* GetCodigos();
         string* GetNombres();
         string* GetApellidos();
@@ -77,9 +79,23 @@ ArrayPersonas<T>::ArrayPersonas(T arr[], int tama, int Var, string F ){
         }
 }
 template <typename T>
+ArrayPersonas<T>::ArrayPersonas(const ArrayPersonas &o){
+    NroVariables=o.NroVariables;
+    tam = o.tam/o.NroVariables;
+    archiv = o.archiv;
+    ptr= new T[tam];
+    int x = 0;
+    for(int a = 0; a < tam ; a++)
+        ptr[a]= o.ptr[a];
+}
+template <typename T>
 ArrayPersonas<T>::~ArrayPersonas(){
     delete[] ptr;
     cout<< "Destructor invoked"<< endl;
+}
+template <typename T>
+T*ArrayPersonas<T>::GetPtr(){
+    return ptr;
 }
 template <typename T>
 string* ArrayPersonas<T>::GetCodigos(){

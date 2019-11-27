@@ -74,8 +74,7 @@ int main(){
         cout<<"\n\t\t\t LESEL-Database\n"<< endl;
         cout<<" 1. Pacientes"<< endl;
         cout<<" 2. Doctores"<< endl;
-        cout<<" 3. Organizar cita"<< endl;
-        cout<<" 4. Salir \n"<< endl;
+        cout<<" 3. Salir \n"<< endl;
         cout<<" Opci\242n: ";
         cin>>opcion;
         system("CLS");
@@ -89,14 +88,11 @@ int main(){
         case 2:
             B.MenuPrincipal();
             break;
-        /*case 3:
-            A.Citas();
-            break;*/
-        case 4:
+        case 3:
             break;
         }
     }
-    while(opcion!=4);
+    while(opcion!=3);
 
     return 0;
 }
