@@ -25,20 +25,22 @@ class ArrayPersonas{
         string* GetCodigos();
         string* GetNombres();
         string* GetApellidos();
-        void MenuPrincipal();
-        void MenuEnlistar();
         void MostrarPers();
         void MostrarPers2();
+
+        void MenuPrincipal();
         void Agregar();
         void Eliminar();
-        void Modificar();   //error al cerrar en el proceso
+        void Modificar();
         void MostrarInfoPersona();
-        void OrdenarNombre();
-        void OrdenarApellido();
-        void OrdenarApellido2();
-        void Busqueda();
+
+        void MenuOrdenar();
+        void Ordenar(string[]);
+        void MenuBusqueda();
+        void Busqueda(string[]);
+
+        //void Citas();
         void AlmacenarDatos();
-        void AlmacenarDatos2();
 };
 template <typename T>
 void ArrayPersonas<T>::pausa(){
@@ -105,6 +107,23 @@ string* ArrayPersonas<T>::GetApellidos(){
     return ape;
 }
 template <typename T>
+void ArrayPersonas<T>::MostrarPers(){
+    cout<<"\n\t\t\tEnlistado de registros"<<endl;
+    for(int i = 0;i < tam;i++){
+        cout<< "\n Persona " << i+1 << " :"<< endl;
+        (ptr+i)->mostrar();
+    }
+    pausa();
+}
+template <typename T>
+void ArrayPersonas<T>::MostrarPers2(){
+    cout<< " Elija el registro a modificar: ";
+    for(int i = 0;i < tam;i++){
+        cout<< "\n  " << i+1 << " : " ;
+        (ptr+i)->mostrar2();
+    }
+}
+template <typename T>
 void ArrayPersonas<T>::MenuPrincipal(){
     int opcion;
     do{
@@ -136,64 +155,16 @@ void ArrayPersonas<T>::MenuPrincipal(){
             MostrarInfoPersona();
             break;
         case 5:
-            MenuEnlistar();
+            MenuOrdenar();
             break;
         case 6:
-            Busqueda();
+            MenuBusqueda();
             break;
         case 7:
             break;
         }
     }
     while(opcion!=7);
-}
-template <typename T>
-void ArrayPersonas<T>::MenuEnlistar(){
-int opcion;
-    do{
-        cout<<"\n\t\t\t Elegir forma de ordenar "<< endl;
-        cout<<" 1. Nombre"<< endl;
-        cout<<" 2. Apellido"<< endl;
-        cout<<" 3. ---------"<< endl;
-        cout<<" 4. Salir \n"<< endl;
-        cout<<" Opci\242n: ";
-        cin>>opcion;
-        system("CLS");
-        switch(opcion){
-        default:
-            cout<<" Ha ingresado una opci\242n no valida!\n\n";
-            break;
-        case 1:
-            OrdenarNombre();
-            break;
-        case 2:
-            //OrdenarApellido2();
-            break;
-        /*case 3:
-            //Eliminar();
-            break;*/
-        case 4:
-            break;
-        }
-    }
-    while(opcion!=4);
-}
-template <typename T>
-void ArrayPersonas<T>::MostrarPers(){
-    cout<<"\n\t\t\tEnlistado de registros"<<endl;
-    for(int i = 0;i < tam;i++){
-        cout<< "\n Persona " << i+1 << " :"<< endl;
-        (ptr+i)->mostrar();
-    }
-    pausa();
-}
-template <typename T>
-void ArrayPersonas<T>::MostrarPers2(){
-    cout<< " Elija el registro a modificar: ";
-    for(int i = 0;i < tam;i++){
-        cout<< "\n  " << i+1 << " : " ;
-        (ptr+i)->mostrar2();
-    }
 }
 template <typename T>
 void ArrayPersonas<T>::Agregar(){
@@ -208,7 +179,7 @@ void ArrayPersonas<T>::Agregar(){
     ptr2 = ptrAux;
     (*(ptr+tam-1)).SetCodigo(GetCodigos(),tam);
     (*(ptr+tam-1)).SetDatos();
-    (*(ptr+tam-1)).SubirDatos();
+    (*(ptr+tam-1)).SubirDatos(archiv);
         cout<<"\n El registro se ha completado correctamente.\n\n";
     pausa();
 }
@@ -271,61 +242,88 @@ void ArrayPersonas<T>::MostrarInfoPersona(){
     pausa();
 }
 template <typename T>
-void ArrayPersonas<T>::OrdenarNombre(){
-    for(int i=0 ; i < tam-1; i++){
-        int m=i;
-        for(int k = 0 ; ptr[m].GetNombre()[k] != '\0'; k++){
-            for(int j = i+1 ; j < tam; j++){
-                if(ptr[m].GetNombre()[k] > ptr[j].GetNombre()[k]){
-                    m=j;
-                }
-            T aux = ptr[m];
-            ptr[m]= ptr[i];
-            ptr[i] = aux;
-            }
+void ArrayPersonas<T>::MenuOrdenar(){
+int opcion;
+    do{
+        cout<<"\n\t\t\t Elegir forma de ordenar "<< endl;
+        cout<<" 1. Nombre"<< endl;
+        cout<<" 2. Apellido"<< endl;
+        cout<<" 3. ---------"<< endl;
+        cout<<" 4. Salir \n"<< endl;
+        cout<<" Opci\242n: ";
+        cin>>opcion;
+        system("CLS");
+        switch(opcion){
+        default:
+            cout<<" Ha ingresado una opci\242n no valida!\n\n";
+            break;
+        case 1:
+            Ordenar(GetNombres());
+            break;
+        case 2:
+            Ordenar(GetApellidos());
+            break;
+        /*case 3:
+            //Eliminar();
+            break;*/
+        case 4:
+            break;
         }
     }
-    MostrarPers();
-    AlmacenarDatos2();//
+    while(opcion!=4);
 }
 template <typename T>
-void ArrayPersonas<T>::OrdenarApellido(){
-    string *Dat = GetApellidos();
+void ArrayPersonas<T>::Ordenar(string Gets[]){
+    string *Dat = Gets;
     for(int i=0 ; i < tam-1; i++){
         int m=i;
         for(int j = i+1 ; j < tam; j++){
-            for(int k = 1 ; Dat[m][k] != '\0'; k++){
-                if(Dat[m][k-1] == Dat[j][k-1] && Dat[m][k] > Dat[j][k]){    //if Dat[j][k]=='\0'
+                if(Dat[m] > Dat[j]){    //if Dat[j][k]=='\0'
                     m=j;
                 }
             }
-        }
         T aux = ptr[m];
         ptr[m]= ptr[i];
         ptr[i] = aux;
     }
     MostrarPers();
-    AlmacenarDatos2();//
+    AlmacenarDatos();//
 }
-/*template <typename T>
-void ArrayPersonas<T>::OrdenarApellido2(){
-    string *ape = GetApellidos();
-    int z = sizeof(ape)/sizeof(ape[0]);
-    sort(ape,ape+tam); //Use the start and end like this
-  for(int y = 0; y < z; y++)
-  {
-    cout << ape[y] << endl;
-  }
-  pausa();
-}*/
 template <typename T>
-void ArrayPersonas<T>::Busqueda(){
+void ArrayPersonas<T>::MenuBusqueda(){
+int opcion;
+    do{
+        cout<<"\n\t\t\t Buscar por "<< endl;
+        cout<<" 1. Nombre"<< endl;
+        cout<<" 2. Apellido"<< endl;
+        cout<<" 3. Salir \n"<< endl;
+        cout<<" Opci\242n: ";
+        cin>>opcion;
+        system("CLS");
+        switch(opcion){
+        default:
+            cout<<" Ha ingresado una opci\242n no valida!\n\n";
+            break;
+        case 1:
+            Busqueda(GetNombres());
+            break;
+        case 2:
+            Busqueda(GetApellidos());
+            break;
+        case 3:
+            break;
+        }
+    }
+    while(opcion!=4);
+}
+template <typename T>
+void ArrayPersonas<T>::Busqueda(string Gets[]){
     cout<<"\n\t\t\t Busqueda "<< endl;
     cout<<" Introduzca dato a buscar: ";
     vector <int> aux;
     string ele;
     cin>>ele;
-    string *arr = GetApellidos();
+    string *arr = Gets;
     for(int b = 0;b <tam;b++){
        arr[b][0] = putchar(tolower(arr[b][0]));  //arreglar impresion de conversiones
     }
@@ -349,19 +347,18 @@ void ArrayPersonas<T>::Busqueda(){
         (ptr+h)->mostrar();}
     pausa();
 }
+/*template <typename T>
+void ArrayPersonas<T>::Citas(){
+
+
+
+
+}*/
 template <typename T>
 void ArrayPersonas<T>::AlmacenarDatos(){
-    (ptr)->Limpiar();
+    (ptr)->Limpiar(archiv);
     for(int i = 0;i < tam;i++){
-        (ptr+i)->SubirDatos();
+        (ptr+i)->SubirDatos(archiv);
     }
-}
-template <typename T>
-void ArrayPersonas<T>::AlmacenarDatos2(){
-    for(int i = 0;i < tam;i++){
-        (ptr+i)->ReescribirDatos2(archiv);
-    }
-    remove("pacientes.txt");
-    rename("auxiliar.txt","pacientes.txt");
 }
 #endif // ARRAYPERSONAS_H

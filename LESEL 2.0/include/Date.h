@@ -11,13 +11,13 @@ class Date{
         string dia;
         string mes;
         string anho;
-        string arch;
     public:
         Date();
-        Date(string, string, string, string);
+        Date(string, string, string);
         void SetDatos();
         void mostrar();
-        void SubirDatos(string);
+        void mostrar2();
+        void SubirDatos();
         string GetDia();
         string GetMes();
         string GetAnho();

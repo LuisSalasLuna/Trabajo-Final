@@ -5,13 +5,11 @@ Date::Date(){
     dia = "Dia";
     mes = "Mes";
     anho = "Anho";
-    arch = "pacientes.txt";
 }
-Date::Date(string D, string M, string A, string F){
+Date::Date(string D, string M, string A){
     dia = D;
     mes = M;
     anho = A;
-    arch = F;
 }
 string Date::GetDia(){
     return dia;
@@ -24,13 +22,13 @@ string Date::GetAnho(){
 }
 void Date::SetDatos(){
     fflush(stdin);
-    cout<<" Ingresa el dia de nacimiento(DD): ";
+    cout<<"    Ingresa el dia de nacimiento(DD): ";
     getline(cin,dia);
     fflush(stdin);
-    cout<<" Ingresa el mes de nacimiento(MM): ";
+    cout<<"     Ingresa el mes de nacimiento(MM): ";
     getline(cin,mes);
     fflush(stdin);
-    cout<<" Ingresa el anho de nacimiento(AAAA): ";
+    cout<<"     Ingresa el anho de nacimiento(AAAA): ";
     getline(cin,anho);
     fflush(stdin);
 }
@@ -39,9 +37,12 @@ void Date::mostrar(){
     cout<< " Mes: "<< mes<< endl;
     cout<< " Anho: "<< anho<< endl;
 }
-void Date::SubirDatos(string arch){
+void Date::mostrar2(){
+    cout<< " Nacimiento: " << dia << "/" << mes << "/" << anho <<endl;
+}
+void Date::SubirDatos(){
     ofstream escritura;
-    escritura.open(arch.c_str(),ios::app);
+    escritura.open("pacientes.txt",ios::app);
 
     escritura<<dia<<"\n"<<mes<<"\n"<<anho<<"\n";
 

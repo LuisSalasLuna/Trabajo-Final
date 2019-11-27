@@ -10,7 +10,7 @@ protected:
     string codigo;
     string nombre;
     string apellido;
-    string archivo;
+    //string archivo;
 public:
     Persona();
     Persona(string, string, string);
@@ -22,8 +22,7 @@ public:
     virtual void mostrar();
     virtual void mostrar2();
     virtual void SubirDatos(string);
-    void Limpiar();
-    virtual void ReescribirDatos2(string);
+    void Limpiar(string);
 };
 
 #endif // PERSONA_H

@@ -40,46 +40,34 @@ string* ObtenerStrings(string arch){
     extraccion.close();
     return arr;
 }
-Persona *GetPerson1(int tam, string *cad){
-    //int tam =ObtenerTam(file);
-    string *sol = cad;
-    int x = 0;
-    Persona *Per = new Persona[tam/3];
-    for(int i=0; i<tam/3;i++){
-        *(Per+i)=Persona(sol[x],sol[x+1],sol[x+2]);
-        x += 3;
-    }
-    return Per;
-}
 Paciente *GetPac(int tam, string *cad){
-    //int tam =ObtenerTam(file);
     string *sol = cad;
     int x = 0;
-    Paciente *Per = new Paciente[tam/5];
-    for(int i=0; i<tam/5;i++){
-        *(Per+i)=Paciente(sol[x],sol[x+1],sol[x+2],sol[x+3],sol[x+4]);
-        x += 5;
+    Paciente *Pac = new Paciente[tam/7];
+    for(int i=0; i<tam/7;i++){
+        *(Pac+i)=Paciente(sol[x],sol[x+1],sol[x+2],Date(sol[x+3],sol[x+4],sol[x+5]),sol[x+6]);
+        x += 7;
     }
-    return Per;
+    return Pac;
 }
 Doctor *GetDoc(int tam, string *cad){
-    //int tam =ObtenerTam(file);
     string *sol = cad;
     int x = 0;
-    Doctor *Per = new Doctor[tam/4];
+    Doctor *Doc = new Doctor[tam/4];
     for(int i=0; i<tam/4;i++){
-        *(Per+i)=Doctor(sol[x],sol[x+1],sol[x+2],sol[x+3]);
+        *(Doc+i)=Doctor(sol[x],sol[x+1],sol[x+2],sol[x+3]);
         x += 4;
     }
-    return Per;
+    return Doc;
 }
 int main(){
     int a = ObtenerTam("pacientes.txt");
     int b = ObtenerTam("doctores.txt");
     string *p = ObtenerStrings("pacientes.txt");
-    Doctor *Doc =GetDoc(ObtenerTam("doctores.txt"),p);
-    Paciente *Per1 =GetPac(ObtenerTam("pacientes.txt"),p);
-    ArrayPersonas <Paciente> A(Per1,a,5,"pacientes.txt");
+    string *d = ObtenerStrings("doctores.txt");
+    Paciente *Pac =GetPac(a,p);
+    Doctor *Doc =GetDoc(b,d);
+    ArrayPersonas <Paciente> A(Pac,a,7,"pacientes.txt");
     ArrayPersonas <Doctor> B(Doc,b,4,"doctores.txt");
     int opcion;
     do{
@@ -102,7 +90,7 @@ int main(){
             B.MenuPrincipal();
             break;
         /*case 3:
-            Cita();
+            A.Citas();
             break;*/
         case 4:
             break;

@@ -6,16 +6,17 @@
 #include <stdio.h>
 using namespace std;
 #include <Persona.h>
+#include <Date.h>
 
 class Paciente : public Persona{
     private:
-        string nacimiento;
+        Date nacimiento;
         string direccion;
     public:
         Paciente();
-        Paciente(string, string, string, string, string);
+        Paciente(string, string, string, Date, string);
         void mostrar();
         void SetDatos();
-        void SubirDatos();
+        void SubirDatos(string);
 };
 #endif // PACIENTE_H

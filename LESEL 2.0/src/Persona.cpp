@@ -23,7 +23,7 @@ string Persona::GetApellido(){
 void Persona::SetCodigo(string *ptr, int tam){
     string *cod = ptr;
     fflush(stdin);
-    cout<<"\n Ingresa el c\242digo de la persona: ";
+    cout<<"\n Ingrese el c\242digo: ";
     getline(cin,codigo);
     for(int i = 0; i != tam ; i++){
         while(codigo == cod[i] || codigo == ""|| codigo == " "){
@@ -36,10 +36,10 @@ void Persona::SetCodigo(string *ptr, int tam){
 }
 void Persona::SetDatos(){
     fflush(stdin);
-    cout<<" Ingresa el nombre de la persona: ";
+    cout<<" Ingrese el nombre: ";
     getline(cin,nombre);
     fflush(stdin);
-    cout<<" Ingresa el apellido de la persona: ";
+    cout<<" Ingrese el apellido: ";
     getline(cin,apellido);
     fflush(stdin);
 }
@@ -53,25 +53,15 @@ void Persona::mostrar2(){
 }
 void Persona::SubirDatos(string F){
     ofstream escritura;
-    archivo = F;
-    escritura.open("pacientes.txt",ios::app);
+    escritura.open(F.c_str(),ios::app);
 
     escritura<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n";
 
     escritura.close();
 }
-void Persona::Limpiar(){
+void Persona::Limpiar(string F){
     ofstream escritura;
-    escritura.open("pacientes.txt",ios::out);
-
-    escritura.close();
-}
-
-void Persona::ReescribirDatos2(string F){
-    ofstream escritura;
-    escritura.open("auxiliar.txt",ios::app);
-
-    escritura<<codigo<<"\n"<<nombre<<"\n"<<apellido<<"\n";
+    escritura.open(F.c_str(),ios::out);
 
     escritura.close();
 }

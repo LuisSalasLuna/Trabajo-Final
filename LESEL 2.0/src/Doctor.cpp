@@ -17,8 +17,8 @@ void Doctor::mostrar(){
     Persona::mostrar();
     cout<< " Especialidad: "<< especialidad<< endl;
 }
-void Doctor::SubirDatos(){
-    Persona::SubirDatos(archivo);
+void Doctor::SubirDatos(string F){
+    Persona::SubirDatos(F);
     ofstream escritura;
     escritura.open("doctores.txt",ios::app);
 
